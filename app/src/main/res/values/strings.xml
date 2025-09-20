@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Snake</string>
+    <string name="snake_settings">settings</string>
+    <string name="scorekeeper">Highscore:0  Score:0 </string>
+    <string name="channel_name">channel_01</string>
+    <string name="channel_description">new_Score</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="upButton">Up</string>
+    <string name="leftButton">left</string>
+    <string name="rightButton">right</string>
+    <string name="downButton">down</string>
+    <string name="pauseButton">Pause</string>
+    <string name="welcome_Text">Welcome to Snake</string>
+    <string name="snake_Ourorboros">Ouroboros</string>
+    <string name="restartButton">Restart</string>
+</resources>

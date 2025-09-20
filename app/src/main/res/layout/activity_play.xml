@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Game.Play">
+
+    <com.example.snakegame.Game.GameView
+        android:id="@+id/thegame"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/gamepad"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6"
+        >
+        <TextView
+            android:id="@+id/score"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/scorekeeper"
+            android:textAlignment="center"
+            android:textSize="@dimen/scoreSize"
+            android:textStyle="bold"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+
+            />
+
+        <Button
+            android:id="@+id/Up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="moveUp"
+            android:text="@string/upButton"
+            android:textSize="30sp"
+            app:layout_constraintTop_toBottomOf="@id/score"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+        <Button
+            android:id="@+id/Left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/leftButton"
+            android:textSize="30sp"
+            app:layout_constraintTop_toBottomOf="@id/Up"
+            app:layout_constraintRight_toLeftOf="@id/Up"
+            android:onClick="moveLeft"
+            />
+        <Button
+            android:id="@+id/Right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rightButton"
+            android:textSize="30sp"
+            app:layout_constraintTop_toBottomOf="@id/Up"
+            app:layout_constraintLeft_toRightOf="@id/Up"
+            android:onClick="moveRight"/>
+        <Button
+            android:id="@+id/Down"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/downButton"
+            android:textSize="30sp"
+            app:layout_constraintTop_toBottomOf="@id/Right"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:onClick="moveDown"/>
+
+        <Button
+            android:id="@+id/pause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/buttonSpacing"
+            android:layout_marginBottom="@dimen/buttonSpacing"
+            android:text="@string/pauseButton"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:onClick="pause"/>
+
+        <Button
+            android:id="@+id/restart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/buttonSpacing"
+            android:layout_marginBottom="@dimen/buttonSpacing"
+            android:text="@string/restartButton"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:onClick="restart"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</LinearLayout>

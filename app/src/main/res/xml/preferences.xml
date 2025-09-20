@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="Settings">
+        <SwitchPreference
+            android:key="mouseColor"
+            android:title="settings test"
+            android:summary="summary(small test)"
+            android:defaultValue="true"
+            />
+    </PreferenceCategory>
+
+</PreferenceScreen>
