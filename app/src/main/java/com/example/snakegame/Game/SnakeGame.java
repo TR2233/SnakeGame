@@ -6,8 +6,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.preference.PreferenceManager;
 import android.view.SurfaceHolder;
+
+import androidx.preference.PreferenceManager;
 
 import com.example.snakegame.GameLogic.Mouse;
 import com.example.snakegame.GameLogic.testSnake;

@@ -1,8 +1,7 @@
 package com.example.snakegame.MainScreen;
 
 import android.os.Bundle;
-import android.preference.Preference;
-
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.example.snakegame.R;
