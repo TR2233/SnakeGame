@@ -14,6 +14,8 @@ import androidx.preference.PreferenceManager;
 import com.example.snakegame.MainScreen.HighScoreReceiver;
 import com.example.snakegame.R;
 
+import java.util.Locale;
+
 public class Play extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
     //UI buttons for snake control
     Button up, down, left, right, pause, restart;
@@ -74,15 +76,29 @@ public class Play extends AppCompatActivity implements SharedPreferences.OnShare
 
         final String scoreText;
 
-        if (key.equals("Score")) {
-            scoreText = "Highscore: " + sharedPreferences.getInt("HighScore", 0)
-                    + " Score: " + sharedPreferences.getInt(key, 0);
-        } else {
-            scoreText = "Highscore: " + sharedPreferences.getInt(key, 0)
-                    + " Score: " + sharedPreferences.getInt("Score", 0);
-        }
+        final String highScore = getString(R.string.HighScore);
+        final String score = getString(R.string.score);
+        final int highScoreNumber = sharedPreferences.getInt(highScore, 0);
+        final int scoreNumber = sharedPreferences.getInt(key, 0);
 
-        if (sharedPreferences.getInt("Score", 0) > 5) {
+        scoreText = String.format(Locale.getDefault(), "%s: %d %s: %d",
+                highScore, key.equals(score) ? highScoreNumber : scoreNumber, score, scoreNumber);
+
+
+
+//        if (key.equals(score)) {
+//
+//            scoreText = String.format(Locale.getDefault(), "%s: %d %s: %d", highScore, highScoreNumber, score, scoreNumber);
+//
+////            scoreText = "Highscore: " + sharedPreferences.getInt("HighScore", 0)
+////                    + " Score: " + sharedPreferences.getInt(key, 0);
+//        } else {
+//            scoreText = String.format(Locale.getDefault(), "%s: %d %s: %d", highScore, scoreNumber, score, scoreNumber);
+////            scoreText = "Highscore: " + sharedPreferences.getInt(key, 0)
+////                    + " Score: " + sharedPreferences.getInt("Score", 0);
+//        }
+
+        if (sharedPreferences.getInt(getString(R.string.score), 0) > 5) {
             Intent intent = new Intent(Play.this, HighScoreReceiver.class);
             sendBroadcast(intent);
         }

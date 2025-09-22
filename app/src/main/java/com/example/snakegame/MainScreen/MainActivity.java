@@ -48,13 +48,13 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        //create the shared preferences for score and highscore if they don't already exist
+        //create the shared preferences for score and HighScore if they don't already exist
         Context context = getApplicationContext();
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        if (!sharedPreferences.contains("Score")) {
+        if (!sharedPreferences.contains(getString(R.string.score))) {
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putInt("Score", 0);
-            editor.putInt("HighScore", 0);
+            editor.putInt(getString(R.string.score), 0);
+            editor.putInt(getString(R.string.HighScore), 0);
             editor.apply();
         }
 
@@ -88,9 +88,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void resetHighScore(View view) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("HighScore", 0);
+        editor.putInt(getString(R.string.HighScore), 0);
         editor.apply();
-        Toast.makeText(this, "Score reset!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.ScoreReset), Toast.LENGTH_SHORT).show();
     }
 
     private void createNotificationChannel() {

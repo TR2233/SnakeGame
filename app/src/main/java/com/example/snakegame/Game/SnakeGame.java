@@ -12,6 +12,7 @@ import androidx.preference.PreferenceManager;
 
 import com.example.snakegame.GameLogic.Mouse;
 import com.example.snakegame.GameLogic.testSnake;
+import com.example.snakegame.R;
 
 import java.util.LinkedList;
 
@@ -58,7 +59,7 @@ public class SnakeGame {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
         // depending on the settings, the features of the game will change appropriately
-        if (sharedPreferences.getBoolean("mouseColor", true)) {
+        if (sharedPreferences.getBoolean(context.getString(R.string.mouseColor), true)) {
             mouseColor.setColor(Color.RED);
         } else
             mouseColor.setColor(Color.GREEN);
@@ -219,10 +220,10 @@ public class SnakeGame {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        if (score > sharedPreferences.getInt("HighScore", 0)) {
-            editor.putInt("HighScore", score);
+        if (score > sharedPreferences.getInt(context.getString(R.string.HighScore), 0)) {
+            editor.putInt(context.getString(R.string.HighScore), score);
         }
-        editor.putInt("Score", score);
+        editor.putInt(context.getString(R.string.score), score);
         editor.apply();
     }
 
