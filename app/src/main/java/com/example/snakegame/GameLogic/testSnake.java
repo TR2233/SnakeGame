@@ -9,16 +9,16 @@ import java.util.LinkedList;
 public class testSnake {
     private LinkedList<Rect> snakeLinks; // the head will be the last in the list
 
-    private LinkedList<Character> snakeDirections; // directions for the snakeLinks list
+    private LinkedList<Direction> snakeDirections; // directions for the snakeLinks list
 
     private Rect head;
     private Rect tail;
 
-    private char hDirection, tDirection; // head and tail direction
+    private Direction hDirection, tDirection; // head and tail direction
 
     //creates the snake with one link and sets the direction
 
-    public testSnake(Rect firstRect, char direction) {
+    public testSnake(Rect firstRect, Direction direction) {
         snakeLinks = new LinkedList<>();
         snakeDirections = new LinkedList<>();
         snakeLinks.add(new Rect());
@@ -31,7 +31,7 @@ public class testSnake {
         return snakeLinks;
     }
 
-    public LinkedList<Character> getSnakeDirections() {
+    public LinkedList<Direction> getSnakeDirections() {
         return snakeDirections;
     }
 
@@ -54,16 +54,13 @@ public class testSnake {
         tDirection = snakeDirections.getFirst();
         tail = snakeLinks.getFirst();
 
-        if (tDirection == 'u') {
-            tail.set(tail.left, tail.top, tail.right, tail.bottom - 12);
-        } else if (tDirection == 'r') {
-            tail.set(tail.left + 12, tail.top, tail.right, tail.bottom);
-        } else if (tDirection == 'd') {
-            tail.set(tail.left, tail.top + 12, tail.right, tail.bottom);
-        } else {
-            tail.set(tail.left, tail.top, tail.right - 12, tail.bottom);
-        }
+        switch (tDirection) {
+            case UP -> tail.set(tail.left, tail.top, tail.right, tail.bottom - 12);
+            case RIGHT -> tail.set(tail.left + 12, tail.top, tail.right, tail.bottom);
+            case DOWN -> tail.set(tail.left, tail.top + 12, tail.right, tail.bottom);
+            default -> tail.set(tail.left, tail.top, tail.right - 12, tail.bottom);
 
+        }
     }
 
     private void movehead() {
@@ -71,69 +68,36 @@ public class testSnake {
         hDirection = snakeDirections.getLast();
         head = snakeLinks.getLast();
 
-        if (hDirection == 'u') {
-            head.set(head.left, head.top - 12, head.right, head.bottom);
-        } else if (hDirection == 'r') {
-
-            head.set(head.left, head.top, head.right + 12, head.bottom);
-        } else if (hDirection == 'd') {
-            head.set(head.left, head.top, head.right, head.bottom + 12);
-        } else {
-            head.set(head.left - 12, head.top, head.right, head.bottom);
+        switch (hDirection) {
+            case UP -> head.set(head.left, head.top - 12, head.right, head.bottom);
+            case RIGHT -> head.set(head.left, head.top, head.right + 12, head.bottom);
+            case DOWN -> head.set(head.left, head.top, head.right, head.bottom + 12);
+            default -> head.set(head.left - 12, head.top, head.right, head.bottom);
         }
     }
 
     //if it's not in the same direction or the opposite direction go into the if statement
-    public void setDirection(char newDirection) {
+    public void setDirection(Direction newDirection) {
         hDirection = snakeDirections.getLast();
         tDirection = snakeDirections.getFirst();
         head = snakeLinks.getLast();
 
         // for any direction we must take into account which direction the snake is already moving
-        // in order to perform the caclulations correctly
+        // in order to perform the calculations correctly
 
-        //to-do: right now the new direction is a one dimensional line, make it a square
-        // so that when the turn completes it works out. Bad explanation
-        if (hDirection != newDirection && newDirection != getODirection(hDirection)) {
+        if (!hDirection.equals(newDirection) && !newDirection.equals(hDirection.getOppositeDirection())) {
 
-            if (hDirection == 'u') {
-                if (newDirection == 'r') {
-                    snakeLinks.add(new Rect(head.left, head.top, head.right, head.top + 12));
-                } else {
-                    snakeLinks.add(new Rect(head.left, head.top, head.right, head.top + 12));
-                }
-            } else if (hDirection == 'r') {
-                if (newDirection == 'u') {
-                    snakeLinks.add(new Rect(head.right - 12, head.top, head.right, head.bottom));
-                } else {
-                    snakeLinks.add(new Rect(head.right - 12, head.top, head.right, head.bottom));
-                }
-
-            } else if (hDirection == 'd') {
-                if (newDirection == 'r') {
-                    snakeLinks.add(new Rect(head.left, head.bottom - 12, head.right, head.bottom));
-                } else {
-                    snakeLinks.add(new Rect(head.left, head.bottom - 12, head.right, head.bottom));
-                }
-
-            } else {
-                if (newDirection == 'u') {
-                    snakeLinks.add(new Rect(head.left, head.top, head.left + 12, head.bottom));
-                } else {
-                    snakeLinks.add(new Rect(head.left, head.top, head.left + 12, head.bottom));
-                }
-
+            switch (hDirection) {
+                case UP -> snakeLinks.add(new Rect(head.left, head.top, head.right, head.top + 12));
+                case RIGHT ->
+                        snakeLinks.add(new Rect(head.right - 12, head.top, head.right, head.bottom));
+                case DOWN ->
+                        snakeLinks.add(new Rect(head.left, head.bottom - 12, head.right, head.bottom));
+                default ->
+                        snakeLinks.add(new Rect(head.left, head.top, head.left + 12, head.bottom));
             }
             snakeDirections.add(newDirection);
         }
-    }
-
-    //returns the opposite direction the snake is heading
-    private char getODirection(char D) {
-        if (D == 'u') return 'd';
-        else if (D == 'r') return 'l';
-        else if (D == 'd') return 'u';
-        else return 'r';
     }
 
     // makes the snake grow a certain amount once the mouse is eaten
@@ -141,14 +105,12 @@ public class testSnake {
 
         head = snakeLinks.getLast();
         hDirection = snakeDirections.getLast();
-        if (hDirection == 'u') {
-            head.set(head.left, head.top - 16, head.right, head.bottom);
-        } else if (hDirection == 'r') {
-            head.set(head.left, head.top, head.right + 16, head.bottom);
-        } else if (hDirection == 'd') {
-            head.set(head.left, head.top, head.right, head.bottom + 16);
-        } else {
-            head.set(head.left - 16, head.top, head.right, head.bottom);
+
+        switch (hDirection) {
+            case UP -> head.set(head.left, head.top - 16, head.right, head.bottom);
+            case RIGHT -> head.set(head.left, head.top, head.right + 16, head.bottom);
+            case DOWN -> head.set(head.left, head.top, head.right, head.bottom + 16);
+            default -> head.set(head.left - 16, head.top, head.right, head.bottom);
         }
     }
 }

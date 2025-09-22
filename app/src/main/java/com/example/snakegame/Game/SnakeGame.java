@@ -10,6 +10,7 @@ import android.view.SurfaceHolder;
 
 import androidx.preference.PreferenceManager;
 
+import com.example.snakegame.GameLogic.Direction;
 import com.example.snakegame.GameLogic.Mouse;
 import com.example.snakegame.GameLogic.testSnake;
 import com.example.snakegame.R;
@@ -22,14 +23,14 @@ public class SnakeGame {
 
     //game fields
     private int screenW, screenH; // screen width and height
-    private char direction = 'r'; // starting direction for the snake
+    private Direction direction = Direction.RIGHT; // starting direction for the snake
     private testSnake tSnake; // test snake
     private Mouse mouse;
     private double mouseR2; // mouse radius squared for x^2+y^2 <= r^2
     private int score;
     private int xH, yH; // head coordinates used for eating the mouse
     private LinkedList<Rect> tLinks; // same as links but for the test snake
-    private LinkedList<Character> tLinksDirections; // directions corresponding to tLinks
+    private LinkedList<Direction> tLinksDirections; // directions corresponding to tLinks
     private Rect head;
     private boolean isPaused = false;
     private boolean gameOver = false;
@@ -70,14 +71,14 @@ public class SnakeGame {
     }
 
     public void createNewAssets() {
-        tSnake = new testSnake(new Rect(100, 100, 300, 112), 'r');
+        tSnake = new testSnake(new Rect(100, 100, 300, 112), Direction.RIGHT);
         mouse = new Mouse(screenW / 2, screenH / 2, 50);
         mouseR2 = Math.pow(50, 2.0);
         tLinks = tSnake.getSnakeLinks();
         tLinksDirections = tSnake.getSnakeDirections();
         gameOver = false;
         isPaused = false;
-        direction = 'r';
+        direction = Direction.RIGHT;
         score = 0;
         updateScore();
         draw();
@@ -169,20 +170,25 @@ public class SnakeGame {
 
     private boolean testEaten() {
         head = tLinks.getLast();
-        char headDir = tLinksDirections.getLast();
+        Direction headDir = tLinksDirections.getLast();
 
-        if (headDir == 'u') {
-            xH = (head.left + head.right) / 2;
-            yH = head.top;
-        } else if (headDir == 'r') {
-            xH = head.right;
-            yH = (head.top + head.bottom) / 2;
-        } else if (headDir == 'd') {
-            xH = (head.left + head.right) / 2;
-            yH = head.bottom;
-        } else {
-            xH = head.left;
-            yH = (head.top + head.bottom) / 2;
+        switch (headDir) {
+            case UP -> {
+                xH = (head.left + head.right) / 2;
+                yH = head.top;
+            }
+            case RIGHT -> {
+                xH = head.right;
+                yH = (head.top + head.bottom) / 2;
+            }
+            case DOWN -> {
+                xH = (head.left + head.right) / 2;
+                yH = head.bottom;
+            }
+            default -> {
+                xH = head.left;
+                yH = (head.top + head.bottom) / 2;
+            }
         }
 
         return Math.pow(xH - mouse.getX(), 2.0) +
@@ -192,19 +198,19 @@ public class SnakeGame {
     // sets directions for the snake
 
     public void goUp() {
-        direction = 'u';
+        direction = Direction.UP;
     }
 
     public void goRight() {
-        direction = 'r';
+        direction = Direction.RIGHT;
     }
 
     public void goDown() {
-        direction = 'd';
+        direction = Direction.DOWN;
     }
 
     public void goLeft() {
-        direction = 'l';
+        direction = Direction.LEFT;
     }
 
     public void Pause() {

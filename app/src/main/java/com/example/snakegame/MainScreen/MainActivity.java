@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     TextView mTextView;
     SharedPreferences sharedPreferences;
     private IntentFilter filter = new IntentFilter(HighScoreReceiver.NEW_HIGHSCORE_ACTION);
-    private HighScoreReceiver highscoreReceiver = new HighScoreReceiver();
+//    private HighScoreReceiver highscoreReceiver = new HighScoreReceiver();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        registerReceiver(highscoreReceiver, filter);
+//        registerReceiver(highscoreReceiver, filter);
 
         //takes care of new highscore when returned to this activity
 
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
     //make sure the receiver is unregistered when the app is closing
     @Override
     public void onStop() {
-        unregisterReceiver(highscoreReceiver);
+//        unregisterReceiver(highscoreReceiver);
         super.onStop();
     }
 

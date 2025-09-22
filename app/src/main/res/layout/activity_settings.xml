@@ -8,7 +8,7 @@
     tools:context=".MainScreen.Settings">
 
     <fragment
-        android:name="com.example.snake.MainScreen.preferencesFrag"
+        android:name="com.example.snakegame.MainScreen.PreferencesFragment"
         android:id="@+id/preferences"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
