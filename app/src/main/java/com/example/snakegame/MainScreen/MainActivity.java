@@ -24,10 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button startButton;
     Button settingsButton;
-    TextView mTextView;
     SharedPreferences sharedPreferences;
-    private IntentFilter filter = new IntentFilter(HighScoreReceiver.NEW_HIGHSCORE_ACTION);
-//    private HighScoreReceiver highscoreReceiver = new HighScoreReceiver();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,31 +54,17 @@ public class MainActivity extends AppCompatActivity {
             editor.putInt(getString(R.string.HighScore), 0);
             editor.apply();
         }
-
-        //assign the score value to the textview
-//        mTextView = findViewById(R.id.score);
-//        mTextView.setText("HighScore: " + sharedPreferences.getInt("HighScore",0));
-
-        //create the notification channel
-
-        createNotificationChannel();
-
     }
 
     //register the receiver at the beginning of the application
     @Override
     public void onStart() {
         super.onStart();
-//        registerReceiver(highscoreReceiver, filter);
-
-        //takes care of new highscore when returned to this activity
-
     }
 
     //make sure the receiver is unregistered when the app is closing
     @Override
     public void onStop() {
-//        unregisterReceiver(highscoreReceiver);
         super.onStop();
     }
 
@@ -91,20 +74,5 @@ public class MainActivity extends AppCompatActivity {
         editor.putInt(getString(R.string.HighScore), 0);
         editor.apply();
         Toast.makeText(this, getString(R.string.ScoreReset), Toast.LENGTH_SHORT).show();
-    }
-
-    private void createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = getString(R.string.channel_name);
-            String description = getString(R.string.channel_description);
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel("01", name, importance);
-            channel.setDescription(description);
-            //Register the channel with the system, you cant change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-
-        }
     }
 }
