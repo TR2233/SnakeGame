@@ -12,23 +12,22 @@ import androidx.preference.PreferenceManager;
 
 import com.example.snakegame.GameLogic.Direction;
 import com.example.snakegame.GameLogic.Mouse;
-import com.example.snakegame.GameLogic.testSnake;
+import com.example.snakegame.GameLogic.Snake;
 import com.example.snakegame.R;
 
 import java.util.LinkedList;
 
 public class SnakeGame {
     //surface fields
-    private SurfaceHolder surfaceHolder;
+    private final SurfaceHolder surfaceHolder;
 
     //game fields
-    private int screenW, screenH; // screen width and height
+    private final int screenW, screenH; // screen width and height
     private Direction direction = Direction.RIGHT; // starting direction for the snake
-    private testSnake tSnake; // test snake
+    private Snake tSnake; // test snake
     private Mouse mouse;
     private double mouseR2; // mouse radius squared for x^2+y^2 <= r^2
     private int score;
-    private int xH, yH; // head coordinates used for eating the mouse
     private LinkedList<Rect> tLinks; // same as links but for the test snake
     private LinkedList<Direction> tLinksDirections; // directions corresponding to tLinks
     private Rect head;
@@ -36,13 +35,12 @@ public class SnakeGame {
     private boolean gameOver = false;
     //paint fields
 
-    private Paint snakeColor = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private Paint background = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private Paint mouseColor = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint snakeColor = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint background = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint mouseColor = new Paint(Paint.ANTI_ALIAS_FLAG);
     //Preferences
 
     private Context context;
-    private SharedPreferences sharedPreferences;
 
 
     //initializes the surfaceHolder for future drawing and initializes the screen width and height
@@ -57,7 +55,7 @@ public class SnakeGame {
     public void init(Context context) {
 
         this.context = context;
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
         // depending on the settings, the features of the game will change appropriately
         if (sharedPreferences.getBoolean(context.getString(R.string.mouseColor), true)) {
@@ -71,7 +69,7 @@ public class SnakeGame {
     }
 
     public void createNewAssets() {
-        tSnake = new testSnake(new Rect(100, 100, 300, 112), Direction.RIGHT);
+        tSnake = new Snake(new Rect(100, 100, 300, 112), Direction.RIGHT);
         mouse = new Mouse(screenW / 2, screenH / 2, 50);
         mouseR2 = Math.pow(50, 2.0);
         tLinks = tSnake.getSnakeLinks();
@@ -104,14 +102,9 @@ public class SnakeGame {
 
     private boolean snakeIsOnScreen() {
         head = tLinks.getLast();
-
-        if (head.right > screenW || head.top < 0 || head.left < 0 || head.bottom > screenH) {
-            return false;
-        }
-        return true;
+        return head.right <= screenW && head.top >= 0 && head.left >= 0 && head.bottom <= screenH;
     }
-    //draws the assets in the gameview
-
+    //draws the assets in the gameView
     public void draw() {
 
         //it locks the canvas so nothing else can draw on it
@@ -125,7 +118,7 @@ public class SnakeGame {
                 canvas.drawRect(tLinks.get(i), snakeColor);
             }
 
-            canvas.drawCircle(mouse.getX(), mouse.getY(), mouse.getR(), mouseColor);
+            canvas.drawCircle(mouse.getX(), mouse.getY(), mouse.getMouseRadius(), mouseColor);
 
             //unlock the canvas if it is not null
             //making it available for other threads to draw on it
@@ -140,7 +133,7 @@ public class SnakeGame {
         boolean keepGenerating = true;
         int mX = 0;
         int mY = 0;
-        int mR = mouse.getR();
+        int mR = mouse.getMouseRadius();
 
         //this will generate new random coordinates for the mouse
         //it will keep looping until it is within the bounds of the game screen
@@ -169,6 +162,7 @@ public class SnakeGame {
 
 
     private boolean testEaten() {
+        int xH, yH; // snake's head coordinates used for eating the mouse
         head = tLinks.getLast();
         Direction headDir = tLinksDirections.getLast();
 
@@ -233,12 +227,9 @@ public class SnakeGame {
         editor.apply();
     }
 
-    public boolean mouseIsOnScreen(int x, int y, int r) {
-
-        //determines if the ball falls outside of the screen in any way
-        if ((x + r) > screenW || (x - r) < 0 || (y + r) > screenH || (y - r) < 0)
-            return false;
-        return true;
+    public boolean mouseIsOnScreen(int x, int y, int radius) {
+        //determines if the mouse falls outside of the screen in any way
+        return (x + radius) <= screenW && (x - radius) >= 0 && (y + radius) <= screenH && (y - radius) >= 0;
     }
 
     private boolean snakeTangled() {

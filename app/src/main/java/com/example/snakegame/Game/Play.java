@@ -84,20 +84,6 @@ public class Play extends AppCompatActivity implements SharedPreferences.OnShare
         scoreText = String.format(Locale.getDefault(), "%s: %d %s: %d",
                 highScore, key.equals(score) ? highScoreNumber : scoreNumber, score, scoreNumber);
 
-
-
-//        if (key.equals(score)) {
-//
-//            scoreText = String.format(Locale.getDefault(), "%s: %d %s: %d", highScore, highScoreNumber, score, scoreNumber);
-//
-////            scoreText = "Highscore: " + sharedPreferences.getInt("HighScore", 0)
-////                    + " Score: " + sharedPreferences.getInt(key, 0);
-//        } else {
-//            scoreText = String.format(Locale.getDefault(), "%s: %d %s: %d", highScore, scoreNumber, score, scoreNumber);
-////            scoreText = "Highscore: " + sharedPreferences.getInt(key, 0)
-////                    + " Score: " + sharedPreferences.getInt("Score", 0);
-//        }
-
         if (sharedPreferences.getInt(getString(R.string.score), 0) > 5) {
             Intent intent = new Intent(Play.this, HighScoreReceiver.class);
             sendBroadcast(intent);
@@ -108,12 +94,7 @@ public class Play extends AppCompatActivity implements SharedPreferences.OnShare
 
         final Handler myHandler = new Handler();
 
-        myHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                myTextView.setText(scoreText);
-            }
-        });
+        myHandler.post(() -> myTextView.setText(scoreText));
 
     }
 }

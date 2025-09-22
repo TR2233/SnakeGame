@@ -7,6 +7,8 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import androidx.annotation.NonNull;
+
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private GameSnakeLooper gameSnakeLooper;
@@ -31,7 +33,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     // we need to go into the manifest and set the activity to portrait
     // so we dont have to worry about the game switching to landscape
     @Override
-    public void surfaceCreated(SurfaceHolder surfaceHolder) {
+    public void surfaceCreated(@NonNull SurfaceHolder surfaceHolder) {
         Log.e("TSR", "Changed!");
         snakeGame = new SnakeGame(surfaceHolder, getHeight(), getWidth());
         gameSnakeLooper = new GameSnakeLooper(snakeGame, getContext());
@@ -40,13 +42,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     //called if the surface is resized
     @Override
-    public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
+    public void surfaceChanged(@NonNull SurfaceHolder surfaceHolder, int i, int i1, int i2) {
         Log.e("TSR", "Changed!");
     }
 
     //called when the surface is destroyed or goes into the background
     @Override
-    public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+    public void surfaceDestroyed(@NonNull SurfaceHolder surfaceHolder) {
         Log.e("TSR", "Changed!");
         if (gameSnakeLooper != null) {
             //wait for it shutdown

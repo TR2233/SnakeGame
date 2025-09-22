@@ -7,8 +7,8 @@ public class GameSnakeLooper extends Thread {
 
     //is volatile because threads might cash your variables
     private volatile boolean running = true;
-    private SnakeGame snakeGame;
-    private Context context;
+    private final SnakeGame snakeGame;
+    private final Context context;
 
     public GameSnakeLooper(SnakeGame game, Context context) {
         snakeGame = game;

@@ -4,24 +4,26 @@ import android.graphics.Rect;
 
 public class Mouse {
 
-    private int x, y, r;
-    private Rect box;
+    private int x; // x coordinate
+    private int y; // y coordinate
+    private final int mouseRadius;
+    private final Rect box;
 
 
     public void setNewBox(int newX, int newY) {
-        box.set(newX - r, newY - r, newX + r, newY + r);
+        box.set(newX - mouseRadius, newY - mouseRadius, newX + mouseRadius, newY + mouseRadius);
     }
 
-    public Mouse(int x, int y, int r) {
+    public Mouse(int x, int y, int mouseRadius) {
         this.x = x;
         this.y = y;
-        this.r = r;
-        box = new Rect(x - r, y - r, x + r, y + r);
+        this.mouseRadius = mouseRadius;
+        box = new Rect(x - mouseRadius, y - mouseRadius, x + mouseRadius, y + mouseRadius);
     }
 
     // gets mouse's radius
-    public int getR() {
-        return r;
+    public int getMouseRadius() {
+        return mouseRadius;
     }
 
     // gets mouse's x position

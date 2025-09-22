@@ -6,10 +6,10 @@ import java.util.LinkedList;
 
 //snake shall be ten pixels in width
 
-public class testSnake {
-    private LinkedList<Rect> snakeLinks; // the head will be the last in the list
+public class Snake {
+    private final LinkedList<Rect> snakeLinks; // the head will be the last in the list
 
-    private LinkedList<Direction> snakeDirections; // directions for the snakeLinks list
+    private final LinkedList<Direction> snakeDirections; // directions for the snakeLinks list
 
     private Rect head;
     private Rect tail;
@@ -18,7 +18,7 @@ public class testSnake {
 
     //creates the snake with one link and sets the direction
 
-    public testSnake(Rect firstRect, Direction direction) {
+    public Snake(Rect firstRect, Direction direction) {
         snakeLinks = new LinkedList<>();
         snakeDirections = new LinkedList<>();
         snakeLinks.add(new Rect());
@@ -43,11 +43,11 @@ public class testSnake {
             snakeLinks.remove();
             snakeDirections.remove();
         }
-        movetail();
-        movehead();
+        moveTail();
+        moveHead();
     }
 
-    private void movetail() {
+    private void moveTail() {
 
         //get head coordinates
 //        tDirection = snakeLinks.getFirst().getTailDirection();
@@ -63,7 +63,7 @@ public class testSnake {
         }
     }
 
-    private void movehead() {
+    private void moveHead() {
         //get head coordinates
         hDirection = snakeDirections.getLast();
         head = snakeLinks.getLast();
